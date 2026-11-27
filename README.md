@@ -70,6 +70,6 @@
 
 ## 🚀 开始使用
 
-双击 Windows x64 便携版 EXE，点「登录学习通」即可同步作业。课表、日程、待办和独立倒计时可单独使用。
+前往 [GitHub Releases](https://github.com/makesisisi/homework-clock/releases/latest) 下载最新的 Windows x64 便携版（单文件 EXE 或免安装 ZIP 压缩包），双击运行后点「登录学习通」即可同步作业；课表、日程、待办和独立倒计时可单独使用。
 
-当前 GitHub 仓库提供源代码。运行项目或自行生成 Windows 便携版，请参阅 [Windows 构建与发布](docs/windows-build.md)。
+> 首次运行未签名版本时，Windows SmartScreen 可能会弹出提示；下载后可对照 Release 附带的 `SHA256SUMS.txt` 校验文件完整性。如需从源码运行或自行构建，请参阅 [Windows 构建与发布](docs/windows-build.md)。
