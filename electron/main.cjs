@@ -405,14 +405,14 @@ function openCountdownManager(id = null) {
 
 function createTray() {
   tray = new Tray(path.join(__dirname, '../src/assets/clock.ico'));
-  tray.setToolTip('作业时钟');
+  tray.setToolTip('课隙');
   const toggle = () => widget.isVisible() ? widget.hide() : showWidget();
   tray.on('click', toggle);
   const updateMenu = () => tray.setContextMenu(Menu.buildFromTemplate([
     { label: widget.isVisible() ? '隐藏组件' : '显示组件', click: toggle },
     { label: '倒计时小组件', click: () => openCountdownManager() },
     { type: 'separator' },
-    { label: '退出作业时钟', click: () => app.quit() }
+    { label: '退出课隙', click: () => app.quit() }
   ]));
   widget.on('show', updateMenu);
   widget.on('hide', updateMenu);
@@ -497,7 +497,7 @@ function registerIpc() {
 function createWidget() {
   const icon = path.join(__dirname, '../dist/client/clock-icon.png');
   widget = new BrowserWindow({
-    ...initialBounds(), title: '作业时钟', frame: false, transparent: true,
+    ...initialBounds(), title: '课隙', frame: false, transparent: true,
     backgroundColor: '#00000000', hasShadow: false, thickFrame: false, resizable: false, maximizable: false, fullscreenable: false,
     alwaysOnTop: settings.pinned, skipTaskbar: true, show: false, icon,
     webPreferences: {

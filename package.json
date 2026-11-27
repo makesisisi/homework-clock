@@ -22,8 +22,8 @@
     "vite": "6.4.2"
   },
   "main": "electron/main.cjs",
-  "description": "学习通未交作业桌面组件",
-  "author": "Homework Clock",
+  "description": "课隙：Windows 桌面课表、学习通作业、待办与倒计时组件",
+  "author": "Kexi",
   "devDependencies": {
     "@phosphor-icons/react": "2.1.10",
     "electron": "45.2.3",

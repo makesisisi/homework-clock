@@ -7,7 +7,7 @@ Before making substantial visual changes, use the Product Design plugin's `get-c
 When implementing from a selected generated mock, treat that image as the source of truth for layout, component anatomy, density, spacing, color, typography, visible content, and hierarchy.
 
 Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts/prepare-sites-build.mjs`, and `tests/sites-worker.test.mjs` intact so the same local prototype can be handed to Sites. Before a Sites handoff, run `npm run build` and `npm run test:sites`; the build must leave `dist/client/index.html`, `dist/server/index.js`, and `dist/.openai/hosting.json`.
-## 作业时钟
+## 课隙（Kexi）
 
 - 这是独立的 Windows 桌面应用，Electron 入口在 electron/。浏览器预览只使用示例作业。
 - 信息架构按「课程 → 日程 → 作业 → 待办」排序，追求极致纯净度。采用 A2 极简结构：顶部单行轻日期锚点（兼作窗口拖拽区，悬停时右侧浮现待办、新建日程、置顶、设置），紧接同字号微透明「下一节课」胶囊条（点击打开课表），主体沿用纵向时间线展示日程与作业（行内「加入待办」悬停浮现，已加入保留绿勾），底栏平时隐藏、悬停轻显同步状态与学习通入口，操作提示 1.8 秒后自动消退。
@@ -17,7 +17,7 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - 经典磨砂参考早期 macOS 的半透明材质，保留取样的颜色变化，配合扩散、细颗粒和独立的底色及模糊设置。开启「跟随动态壁纸」后，需要取样的材质会在可见期间持续刷新桌面，隐藏和最小化时暂停。
 - 液态玻璃和经典磨砂使用系统字体、实色文字和轻阴影，字形保持自然。液态玻璃仅在文字附近用局部渐隐背景提升可读性，经典磨砂独立记忆浅字／深墨，默认深墨。
 - 双击 Windows 程序打开组件。学习通会话与后台同步在程序内运行。
-- 同一 Windows 用户的正式版沿用 `%APPDATA%\Homework Clock` 和 `persist:homework-clock-chaoxing`，以便重启和换版时复用有效的学习通登录会话。预览与测试使用独立的目录。
+- 更名为课隙（Kexi）后，同一 Windows 用户的正式版继续沿用 `%APPDATA%\Homework Clock` 和 `persist:homework-clock-chaoxing`，以便重启和跨版本升级时自动保留有效的学习通登录会话。预览与测试使用独立的目录。
 - 支持拖动手柄缩放、尺寸预设、四角定位和自动吸附。贴角后从内侧缩放，启动时恢复上次尺寸和位置。
 - 倒计时通过组件设置和系统托盘管理，每项开启独立桌面卡片，可自选名称、目标时间和强调色。位置和显示状态随重启恢复；显示器暂时缺席时保留原位置供重新连接后恢复。
 - AI 接口沿用本机 HTTP 地址和密钥，可新增待办、倒计时，并读取待办、倒计时、作业缓存、日程和课表。读取只返回业务字段。

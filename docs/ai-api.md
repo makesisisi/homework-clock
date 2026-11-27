@@ -1,4 +1,4 @@
-# AI 接口
+# 课隙（Kexi）AI 接口
 
 打开「组件设置 → AI 接口」，开启后点「复制调用配置」。复制的 JSON 包含本机地址 `baseUrl`（默认 `http://127.0.0.1:47831`）、各接口地址 `endpoints` 和密钥 `token`。`url` 仍是原来的待办写入地址。所有请求使用 `Authorization: Bearer <token>`。程序隐藏到托盘后仍可调用。关闭接口会撤销密钥，下次开启会生成新密钥。
 
@@ -22,13 +22,13 @@
 复制配置后，可在 PowerShell 中新增倒计时并查询数据。
 
 ```powershell
-$clockApi = Get-Clipboard -Raw | ConvertFrom-Json
-$clockKey = [guid]::NewGuid().ToString()
-$clockHeaders = @{ Authorization = "Bearer $($clockApi.token)" }
-$clockBody = @{ title = '实验答辩'; at = '2026-12-10T18:00:00+08:00' } | ConvertTo-Json -Compress
-Invoke-RestMethod -Method Post -Uri $clockApi.endpoints.countdowns `
-  -Headers ($clockHeaders + @{ 'Idempotency-Key' = $clockKey }) `
+$kexiApi = Get-Clipboard -Raw | ConvertFrom-Json
+$kexiKey = [guid]::NewGuid().ToString()
+$kexiHeaders = @{ Authorization = "Bearer $($kexiApi.token)" }
+$kexiBody = @{ title = '实验答辩'; at = '2026-12-10T18:00:00+08:00' } | ConvertTo-Json -Compress
+Invoke-RestMethod -Method Post -Uri $kexiApi.endpoints.countdowns `
+  -Headers ($kexiHeaders + @{ 'Idempotency-Key' = $kexiKey }) `
   -ContentType 'application/json; charset=utf-8' `
-  -Body ([Text.Encoding]::UTF8.GetBytes($clockBody))
-Invoke-RestMethod -Uri $clockApi.endpoints.data -Headers $clockHeaders
+  -Body ([Text.Encoding]::UTF8.GetBytes($kexiBody))
+Invoke-RestMethod -Uri $kexiApi.endpoints.data -Headers $kexiHeaders
 ```

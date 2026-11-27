@@ -1,6 +1,6 @@
 appId: cn.homeworkclock.widget
-productName: 作业时钟
-artifactName: HomeworkClock-${version}-Windows-${arch}.${ext}
+productName: 课隙
+artifactName: Kexi-${version}-Windows-${arch}.${ext}
 directories:
   output: release
 files:

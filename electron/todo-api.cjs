@@ -111,7 +111,7 @@ function createTodoApi(profile, { addTodo, addCountdown, readState }, port = 478
         const view = req.url === DATA ? Object.fromEntries([...readers].map(([name, project]) => [name, project(state)]))
           : { [resource]: readers.get(resource)(state) };
         return respond(res, 200, { timeZone: 'Asia/Shanghai', ...view });
-      } catch { return fail(500, '无法读取作业时钟数据'); }
+      } catch { return fail(500, '无法读取课隙数据'); }
     }
     if (!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'] ?? '')) return fail(415, '请提交 JSON');
     if (Number(req.headers['content-length']) > MAX_BODY) return fail(413, '请求内容太长');
