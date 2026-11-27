@@ -1,0 +1,134 @@
+/* ================================================================
+   THEME 4: 暖白皱笺 (Warm Off-White Crumpled Cotton Paper)
+   Uses real crumpled white cotton paper texture + warm multiply blend,
+   hollow/double-ring timeline dots, dashed day dividers & vermilion stamp.
+   ================================================================ */
+.swatch.cotton {
+  background: linear-gradient(135deg, #f6eedf 0% 65%, #e6d7be 65% 84%, #8c4e24 84% 100%);
+  border-color: #c5b49b;
+}
+
+.widget[data-theme="cotton"] {
+  color-scheme: light;
+  --fg: #29221b;
+  --sub: #65594c;
+  --faint: #928474;
+  --rail: rgba(110, 92, 70, 0.28);
+  --rule: rgba(110, 92, 70, 0.18);
+  --surface: rgba(110, 88, 62, 0.075);
+  --surface-hover: rgba(110, 88, 62, 0.125);
+  --input-bg: rgba(255, 253, 248, 0.72);
+  --input-bd: rgba(132, 112, 86, 0.28);
+  --primary-bg: #8c4e24;
+  --primary-fg: #fbf7ef;
+  --course: #8c4e24;
+  --course-bg: rgba(140, 78, 36, 0.075);
+  --course-bd: rgba(140, 78, 36, 0.24);
+  --live: #356647;
+  --ok: #356647;
+  --soon: #9a5111;
+  --urgent: #a82b1e;
+  --urgent-bg: rgba(168, 43, 30, 0.075);
+  --urgent-bd: rgba(168, 43, 30, 0.42);
+  --panel-border: rgba(196, 180, 156, 0.68);
+  --panel-radius: 10px;
+  --text-shadow: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 253, 247, 0.88),
+    inset 0 -1px 0 rgba(132, 112, 86, 0.24);
+}
+
+/* Real Crumpled Paper Base + Multiply Texture + Soft Directional Sheen */
+.widget[data-theme="cotton"] .material {
+  background: #f6eedf;
+}
+.widget[data-theme="cotton"] .material::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./assets/crumpled-paper.jpg") center / cover no-repeat;
+  mix-blend-mode: multiply;
+  filter: contrast(1.18) brightness(1.01);
+  opacity: 1;
+}
+.widget[data-theme="cotton"] .material::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 249, 236, 0.10), rgba(235, 220, 194, 0.08));
+}
+
+/* Tactile Course Strip */
+.widget[data-theme="cotton"] .next-lesson {
+  border-radius: 8px;
+  border-left: 2.5px solid var(--course);
+}
+.widget[data-theme="cotton"] .next-lesson[data-today="false"] {
+  border-left-color: var(--sub);
+}
+.widget[data-theme="cotton"] .next-lesson[data-live="true"] {
+  border-left-color: var(--live);
+}
+
+/* Stationery Timeline: Hollow & Double-Ring Nodes + Dashed Day Dividers */
+.widget[data-theme="cotton"] .day + .day {
+  border-top: 1px dashed var(--rule);
+  padding-top: 10px;
+}
+.widget[data-theme="cotton"] .day::before {
+  width: 8px;
+  height: 8px;
+  left: -16.5px;
+  top: 5px;
+  background: #f2eadc;
+  border: 1.6px solid var(--sub);
+}
+.widget[data-theme="cotton"] .day + .day::before { top: 15px; }
+.widget[data-theme="cotton"] .day[data-tone="soon"]::before { border-color: var(--soon); }
+.widget[data-theme="cotton"] .day[data-tone="urgent"]::before { border-color: var(--urgent); }
+.widget[data-theme="cotton"] .day[data-today="true"]::before {
+  background: var(--course);
+  border: 0;
+  box-shadow: 0 0 0 2px #f2eadc, 0 0 0 3.2px var(--course);
+}
+.widget[data-theme="cotton"] .day[data-today="true"] > .date-chip {
+  color: var(--course);
+}
+
+/* Vermilion Seal / Stamp for Urgent Countdowns */
+.widget[data-theme="cotton"] .countdown[data-tone="urgent"] {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--urgent-bg);
+  border: 1px solid var(--urgent-bd);
+  font-size: 11.5px;
+}
+.widget[data-theme="cotton"] .countdown[data-tone="urgent"]::before {
+  width: 4px;
+  height: 4px;
+}
+
+/* Stationery Dashed Dividers & Accent Details */
+.widget[data-theme="cotton"] .subview-header {
+  border-bottom-style: dashed;
+}
+.widget[data-theme="cotton"] .subview-footer,
+.widget[data-theme="cotton"] .window-options,
+.widget[data-theme="cotton"] .settings-actions,
+.widget[data-theme="cotton"] .schedule-actions {
+  border-top-style: dashed;
+}
+.widget[data-theme="cotton"] .todo-check:checked::after {
+  border-color: #fbf7ef;
+}
+.widget[data-theme="cotton"] .portal-link {
+  color: var(--course);
+  text-decoration: underline;
+  text-decoration-color: rgba(140, 78, 36, 0.42);
+  text-underline-offset: 3px;
+}
+.widget[data-theme="cotton"] .assignment-todo:not([data-added="true"]) .icon-button {
+  background: rgba(255, 253, 248, 0.72);
+  border: 1px solid var(--rule);
+  color: var(--course);
+}

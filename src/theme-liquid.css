@@ -1,0 +1,110 @@
+.widget[data-theme="liquid"] {
+  --panel-radius: 20px;
+  --panel-border: transparent;
+  --rail: rgba(220, 234, 255, 0.16);
+  --rule: rgba(214, 230, 255, 0.14);
+  --surface: rgba(232, 242, 255, 0.09);
+  --surface-hover: rgba(238, 246, 255, 0.16);
+  --input-bg: rgba(12, 18, 30, 0.34);
+  --input-bd: rgba(214, 232, 255, 0.2);
+  --primary-bg: rgba(124, 182, 255, 0.24);
+  --primary-fg: #f4f9ff;
+  --course-bg: rgba(134, 176, 255, 0.14);
+  --course-bd: rgba(168, 200, 255, 0.26);
+  --urgent-bg: rgba(255, 118, 114, 0.15);
+  --urgent-bd: rgba(255, 156, 152, 0.28);
+}
+
+.widget[data-theme="liquid"][data-ink="dark"] {
+  color-scheme: light;
+  --rail: rgba(18, 28, 48, 0.12);
+  --rule: rgba(18, 28, 48, 0.11);
+  --surface: rgba(255, 255, 255, 0.3);
+  --surface-hover: rgba(255, 255, 255, 0.48);
+  --input-bg: rgba(255, 255, 255, 0.42);
+  --input-bd: rgba(24, 38, 64, 0.16);
+  --primary-bg: rgba(37, 99, 235, 0.15);
+  --primary-fg: #133980;
+  --course-bg: rgba(56, 112, 224, 0.11);
+  --course-bd: rgba(56, 112, 224, 0.22);
+  --urgent-bg: rgba(214, 56, 66, 0.11);
+  --urgent-bd: rgba(214, 56, 66, 0.24);
+}
+
+.widget[data-theme="liquid"] .liquid-material {
+  border-radius: inherit;
+}
+
+.widget[data-theme="liquid"] .liquid-material::before,
+.widget[data-theme="liquid"] .liquid-material::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.widget[data-theme="liquid"] .liquid-material::before {
+  background:
+    radial-gradient(52% 13% at 14% 0%, rgba(255, 255, 255, 0.22), rgba(196, 224, 255, 0.07) 50%, transparent 76%),
+    radial-gradient(14% 18% at 0% 16%, rgba(188, 174, 255, 0.11), transparent 74%),
+    radial-gradient(37% 11% at 88% 100%, rgba(172, 208, 255, 0.15), rgba(196, 176, 255, 0.06) 52%, transparent 78%);
+  box-shadow: inset -1.5px -1.5px 3px rgba(6, 10, 18, 0.3), inset 0 -10px 16px -14px rgba(6, 10, 18, 0.24);
+}
+
+.widget[data-theme="liquid"][data-ink="dark"] .liquid-material::before {
+  background:
+    radial-gradient(52% 13% at 14% 0%, rgba(255, 255, 255, 0.34), rgba(212, 232, 255, 0.11) 50%, transparent 76%),
+    radial-gradient(14% 18% at 0% 16%, rgba(154, 138, 236, 0.12), transparent 74%),
+    radial-gradient(37% 11% at 88% 100%, rgba(128, 166, 242, 0.14), rgba(162, 140, 236, 0.07) 52%, transparent 78%);
+  box-shadow: inset -1.5px -1.5px 3px rgba(15, 23, 42, 0.16), inset 0 -10px 16px -14px rgba(15, 23, 42, 0.1);
+}
+
+.widget[data-theme="liquid"] .liquid-material::after {
+  padding: 1.5px;
+  background: conic-gradient(from 315deg at 50% 50%, rgba(255, 255, 255, 0.66) 0deg, rgba(186, 220, 255, 0.34) 26deg, rgba(196, 178, 255, 0.16) 52deg, rgba(10, 14, 24, 0.24) 95deg, rgba(8, 12, 22, 0.32) 140deg, rgba(176, 212, 255, 0.28) 176deg, rgba(198, 178, 255, 0.16) 196deg, rgba(8, 12, 22, 0.32) 245deg, rgba(176, 210, 255, 0.18) 312deg, rgba(255, 255, 255, 0.66) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.widget[data-theme="liquid"][data-ink="dark"] .liquid-material::after {
+  background: conic-gradient(from 315deg at 50% 50%, rgba(255, 255, 255, 0.8) 0deg, rgba(146, 186, 248, 0.34) 26deg, rgba(168, 148, 238, 0.22) 52deg, rgba(15, 23, 42, 0.18) 95deg, rgba(15, 23, 42, 0.22) 140deg, rgba(132, 174, 244, 0.28) 176deg, rgba(164, 146, 234, 0.18) 196deg, rgba(15, 23, 42, 0.22) 245deg, rgba(136, 176, 242, 0.18) 312deg, rgba(255, 255, 255, 0.8) 360deg);
+}
+
+.widget[data-theme="liquid"] :is(.next-lesson, .icon-button, .nav-chip, .lesson-card) {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -1px 0 rgba(8, 12, 22, 0.18);
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.widget[data-theme="liquid"][data-ink="dark"] :is(.next-lesson, .icon-button, .nav-chip, .lesson-card) {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56), inset 0 -1px 0 rgba(15, 23, 42, 0.08);
+}
+
+.widget[data-theme="liquid"] .settings .theme-options {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.widget[data-theme="liquid"] :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(126, 196, 255, 0.24);
+}
+
+.widget[data-theme="liquid"][data-ink="dark"] :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+  box-shadow: 0 0 0 4px rgba(29, 111, 226, 0.2);
+}
+
+.swatch.liquid {
+  background:
+    radial-gradient(64% 48% at 20% 12%, rgba(255, 255, 255, 0.55), transparent 64%),
+    radial-gradient(56% 48% at 84% 88%, rgba(168, 196, 255, 0.36), rgba(188, 166, 255, 0.18) 54%, transparent 78%),
+    linear-gradient(148deg, #27364f, #131b2b 62%, #1d243a);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), inset -1px -1px 0 rgba(6, 10, 18, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .widget[data-theme="liquid"] :is(.next-lesson, .icon-button, .nav-chip, .lesson-card) { transition: none; }
+}

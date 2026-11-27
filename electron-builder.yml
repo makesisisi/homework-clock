@@ -1,0 +1,33 @@
+appId: cn.homeworkclock.widget
+productName: 作业时钟
+artifactName: HomeworkClock-${version}-Windows-${arch}.${ext}
+directories:
+  output: release
+files:
+  - dist/client/**/*
+  - electron/main.cjs
+  - electron/backdrop.cjs
+  - electron/window-layout.cjs
+  - electron/homework.cjs
+  - electron/session-restore.cjs
+  - electron/timetable.cjs
+  - electron/timetable-window.cjs
+  - electron/timetable-schools.cjs
+  - electron/timetable-school-directory.json
+  - electron/timetable-zhengfang.cjs
+  - electron/schedules.cjs
+  - electron/countdowns.cjs
+  - electron/countdown-sizes.json
+  - electron/countdown-preload.cjs
+  - electron/todos.cjs
+  - electron/todo-api.cjs
+  - electron/preload.cjs
+  - src/assets/clock.ico
+  - LICENSE.chaoxing
+  - "!node_modules/**/*"
+  - package.json
+asar: true
+win:
+  icon: src/assets/clock.ico
+  target: portable
+

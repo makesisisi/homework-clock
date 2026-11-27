@@ -1,0 +1,143 @@
+.countdowns-entry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--rule);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--fg);
+  text-align: left;
+  font-size: 13px;
+}
+
+.countdowns-entry:hover { background: var(--surface-hover); }
+.countdowns-content { padding-bottom: 8px; }
+.countdowns-empty {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 38px 0;
+  color: var(--sub);
+}
+
+.countdowns-list {
+  list-style: none;
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+.countdowns-list > li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.countdowns-dot { width: 7px; height: 7px; border-radius: 50%; }
+.countdowns-item {
+  display: grid;
+  gap: 2px;
+  padding: 3px 0;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  text-align: left;
+}
+
+.countdowns-item strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; }
+.countdowns-item small { font-size: 12px; color: var(--sub); }
+.countdown-preview { grid-column: 1 / -1; justify-self: center; width: min(100%, 276px); display: grid; justify-items: center; margin: 2px 0 6px; }
+.countdown-style-preview { min-width: 0; color: var(--sub); font-size: 12px; }
+.countdown-style-preview summary { width: fit-content; padding: 4px 2px; cursor: pointer; }
+.countdown-style-preview summary:focus-visible { outline: 1.5px solid var(--course); outline-offset: 2px; }
+.countdown-preview-stage {
+  display: grid;
+  justify-items: center;
+  margin-top: 6px;
+  padding: 8px;
+  border-radius: 11px;
+  background: radial-gradient(ellipse at 100% 0%, #42546d, transparent 72%), linear-gradient(130deg, #193738, #202f43);
+}
+.countdown-preview-stage[data-ink="dark"] {
+  background: radial-gradient(ellipse at 100% 0%, #f0d8c4, transparent 78%), linear-gradient(130deg, #c6d9d2, #d5deee);
+}
+:is(.countdown-preview-stage, .countdown-preview) .countdown-card {
+  width: min(100%, var(--countdown-card-width, 276px));
+  height: var(--countdown-card-height, 138px);
+}
+
+.countdown-window { position: relative; width: 100%; height: 100%; overflow: hidden; -webkit-app-region: drag; }
+.countdown-card {
+  --fg: #f5f7fc;
+  --sub: #bdc9dc;
+  --surface: rgba(255, 255, 255, .09);
+  --surface-hover: rgba(255, 255, 255, .15);
+  --rule: rgba(151, 178, 215, .18);
+  --course: #b9d3fb;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 12px 15px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--countdown-accent) 25%, transparent);
+  border-radius: 17px;
+  background: radial-gradient(ellipse at top left, color-mix(in srgb, var(--countdown-accent) 22%, transparent), transparent 66%), rgba(16, 23, 37, .93);
+  color: var(--fg);
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+.countdown-card-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: 6px; min-height: 24px; }
+.countdown-card-header > svg { color: color-mix(in srgb, var(--countdown-accent), white 43%); }
+.countdown-card-header h1 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.countdown-card-header .icon-button {
+  width: 24px;
+  height: 24px;
+  color: var(--sub);
+  -webkit-app-region: no-drag;
+}
+
+.countdown-remaining {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  color: color-mix(in srgb, var(--countdown-accent) 52%, white);
+  font-size: clamp(19px, 10vw, 29px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.countdown-remaining > span small { margin-left: 4px; font-size: 12px; font-weight: 500; letter-spacing: 0; }
+.countdown-remaining:has(> span:nth-child(2)) { font-size: clamp(17px, 8.3vw, 23px); }
+.countdown-finished { color: var(--fg); font-size: 23px; letter-spacing: 0; }
+.countdown-target { color: var(--sub); font-size: 12px; font-variant-numeric: tabular-nums; }
+.countdown-window-error {
+  position: absolute;
+  inset: auto 10px 8px;
+  margin: 0;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: #592b35;
+  color: #fff;
+  font-size: 12px;
+}

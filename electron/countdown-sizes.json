@@ -1,0 +1,6 @@
+{
+  "standard": { "width": 276, "height": 138 },
+  "tiles": { "width": 164, "height": 164 },
+  "dial": { "width": 174, "height": 174 },
+  "days": { "width": 136, "height": 216 }
+}

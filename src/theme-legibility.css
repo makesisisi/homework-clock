@@ -1,0 +1,117 @@
+/* Refined Windows CJK legibility for liquid and classic glass themes:
+   natural system font hierarchy, opaque ink tokens, restrained shadow,
+   and feather-soft local text protection on liquid glass without outlines. */
+.widget:is([data-theme="liquid"], [data-theme="classic"]) {
+  --fg: #101824;
+  --sub: #2c3a4b;
+  --faint: #4a596b;
+  --course: #1d4e78;
+  --live: #155c44;
+  --ok: #155c44;
+  --soon: #8a4b08;
+  --urgent: #a32634;
+  --text-shadow: 0 1px 1px rgba(255, 255, 255, 0.18);
+  --icon-shadow: 0 1px 1px rgba(255, 255, 255, 0.18);
+  --text-veil-core: rgba(248, 251, 255, 0.3);
+  --text-veil-edge: rgba(248, 251, 255, 0.12);
+  font-family: "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+  font-synthesis-weight: none;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"])[data-ink="light"] {
+  --fg: #f7faff;
+  --sub: #d7e3f2;
+  --faint: #b4c5db;
+  --course: #9fd0ff;
+  --live: #8ce5b8;
+  --ok: #8ce5b8;
+  --soon: #ffd67d;
+  --urgent: #ffa8a0;
+  --text-shadow: 0 1px 2px rgba(6, 12, 22, 0.44);
+  --icon-shadow: 0 1px 2px rgba(6, 12, 22, 0.4);
+  --text-veil-core: rgba(8, 15, 26, 0.32);
+  --text-veil-edge: rgba(8, 15, 26, 0.12);
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) :is(.assignment strong, .next-lesson strong, .lesson-card strong) {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.38;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) .subview-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) .lesson-day h3 {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) .todo-item-copy {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) :is(
+  .anchor-date, .date-chip, .course, .next-lesson small, .next-lesson-extra,
+  .lesson-card small, .lesson-card-tag, .subview-meta, .todo-item-copy small
+) {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) :is(.nav-chip, .sync-btn, .portal-link) {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) :is(.countdown, .next-lesson b) {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.widget[data-theme="liquid"] :is(.assignment-copy, .todo-item-copy, .date-chip, .countdown, .subview-title, .subview-meta) {
+  position: relative;
+  isolation: isolate;
+}
+
+.widget[data-theme="liquid"] :is(.assignment-copy, .todo-item-copy, .date-chip, .countdown, .subview-title, .subview-meta)::after {
+  content: "";
+  position: absolute;
+  inset: -9px -10px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse closest-side,
+    var(--text-veil-core) 0%,
+    var(--text-veil-edge) 58%,
+    transparent 100%
+  );
+}
+
+.widget[data-theme="liquid"] :is(.assignment-copy, .todo-item-copy)::after {
+  inset-inline-end: 20%;
+  inset-block: -14px;
+}
+
+.widget[data-theme="liquid"] .countdown::after {
+  inset-inline-end: 0;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) button:not(.primary, .todo-add-btn) {
+  text-shadow: inherit;
+}
+
+.widget:is([data-theme="liquid"], [data-theme="classic"]) :is(.icon-button, .mini-icon-button, .back-button, .sync-btn) svg {
+  filter: drop-shadow(var(--icon-shadow));
+}

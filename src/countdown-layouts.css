@@ -1,0 +1,202 @@
+.countdown-card[data-layout]:not([data-layout="standard"]) {
+  --cd-track: color-mix(in srgb, var(--sub) 27%, transparent);
+  grid-template-rows: 24px minmax(0, 1fr) auto;
+  align-content: stretch;
+  gap: 6px;
+}
+
+.countdown-card[data-layout]:not([data-layout="standard"]) .countdown-remaining {
+  display: grid;
+  align-items: center;
+  min-height: 0;
+  min-width: 0;
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.countdown-card:not([data-layout="standard"]) .countdown-card-header {
+  gap: 4px;
+  min-width: 0;
+}
+
+.countdown-card:not([data-layout="standard"]) .countdown-card-header h1 { font-size: 12px; }
+
+.countdown-card:not([data-layout="standard"]) .countdown-card-header > svg { display: none; }
+
+.countdown-card:not([data-layout="standard"]) .countdown-target {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 4px;
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.countdown-card[data-layout="tiles"] { padding: 10px 11px; }
+.countdown-card[data-layout="tiles"] .countdown-card-header,
+.countdown-card[data-layout="days"] .countdown-card-header { grid-template-columns: minmax(0, 1fr) auto auto; }
+
+.countdown-card[data-layout="tiles"] .countdown-remaining { align-items: stretch; }
+.cd-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.cd-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 2px 3px;
+  border: 1px solid var(--cd-track);
+  border-radius: 8px;
+}
+
+.cd-tile:first-child:nth-last-child(3) {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.cd-tile strong {
+  font: 600 18px/1.05 var(--cd-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+.cd-tile[data-wide="1"] strong { color: var(--cd-accent-ink); }
+.cd-tiles[data-long="1"] .cd-tile[data-wide="1"] strong { font-size: 12px; }
+.cd-tile small { font-size: 10px; color: var(--sub); }
+
+.cd-tiles[data-done="1"] { grid-template: 1fr / 1fr; }
+.cd-tile-done { flex-direction: row; justify-content: space-around; }
+.cd-tile-done strong { font-family: inherit; font-size: 14px; color: var(--course); }
+
+.countdown-card[data-layout="dial"] {
+  --cd-radius: 50%;
+  border-radius: 50%;
+  clip-path: circle(50%);
+  overflow: hidden;
+  padding: 19px 18px 16px;
+  gap: 2px;
+  justify-items: center;
+  text-align: center;
+}
+
+.countdown-card[data-layout="dial"] .countdown-card-header {
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  width: 110px;
+  gap: 2px;
+}
+
+.countdown-card[data-layout="dial"] .countdown-card-header > h1 { grid-area: 1 / 2; }
+.countdown-card[data-layout="dial"] .countdown-card-header > .icon-button:first-of-type { grid-area: 1 / 1; }
+.countdown-card[data-layout="dial"] .countdown-card-header > .icon-button:last-of-type { grid-area: 1 / 3; }
+
+.cd-dial {
+  position: relative;
+  width: 94px;
+  height: 94px;
+  margin: 0 auto;
+}
+
+.cd-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: end;
+  justify-items: center;
+  padding-bottom: 9px;
+  color: var(--sub);
+}
+
+.cd-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--cd-accent-ink) calc(var(--cd-p, 1) * 1turn), var(--cd-track) 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+}
+
+.cd-ring span { font: 500 9px/1.1 var(--cd-mono); }
+.cd-ring small { display: none; }
+.cd-dial-info {
+  position: absolute;
+  inset: 10px 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.cd-dial-days { font: 700 18px/1.05 var(--cd-mono); color: var(--cd-accent-ink); }
+.cd-dial-days small { margin-left: 2px; font-size: 10px; color: var(--sub); }
+.cd-dial[data-long="1"] .cd-dial-days { font-size: 11px; }
+.cd-dial-clock { font: 600 14px/1.1 var(--cd-mono); }
+
+.countdown-card[data-layout="days"] { padding: 13px 12px 12px; gap: 8px; text-align: center; }
+.countdown-card[data-layout="days"] .countdown-card-header { text-align: left; }
+
+.cd-days, .cd-hero, .cd-side { display: grid; justify-items: center; }
+.cd-days { gap: 10px; }
+.cd-hero { gap: 2px; }
+.cd-hero strong { font: 700 38px/1 var(--cd-mono); color: var(--cd-accent-ink); }
+.cd-days[data-long="1"] .cd-hero strong { font-size: 20px; }
+.cd-hero small { font-size: 12px; color: var(--sub); }
+.cd-side { min-width: 0; width: 90%; padding-top: 8px; border-top: 1px solid var(--cd-track); }
+.cd-side strong { font: 600 15px/1.2 var(--cd-mono); }
+.cd-side small, .cd-sub-clock { font-size: 10px; color: var(--sub); }
+.cd-done-text { font-size: 14px; font-weight: 600; color: var(--course); }
+
+.countdown-card[data-layout="days"] .countdown-target {
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.cd-layout-options { min-width: 0; margin: 0; padding: 0; border: 0; }
+.cd-layout-options legend { margin-bottom: 6px; color: var(--sub); font-size: 11.5px; }
+.cd-layout-picker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.cd-layout-opt {
+  display: grid;
+  grid-template-rows: 24px auto;
+  place-items: center;
+  gap: 4px;
+  padding: 6px 2px;
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  background: transparent;
+  color: var(--sub);
+  font-size: 11px;
+}
+
+.cd-layout-opt[aria-pressed="true"] {
+  border-color: var(--course);
+  color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--course);
+}
+
+.cd-layout-opt:focus-visible { outline: 2px solid var(--course); outline-offset: 1px; }
+.cd-thumb { position: relative; display: block; border: 1px solid currentColor; }
+.cd-thumb-standard { width: 28px; height: 14px; border-radius: 4px; }
+.cd-thumb-tiles {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background:
+    linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat,
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+}
+
+.cd-thumb-dial { width: 20px; height: 20px; border-radius: 50%; }
+.cd-thumb-days { width: 14px; height: 22px; border-radius: 4px; }
+.cd-thumb-dial::after, .cd-thumb-days::after { position: absolute; content: ""; }
+.cd-thumb-dial::after { inset: 3px; border: 1px solid currentColor; border-radius: 50%; }
+.cd-thumb-days::after { inset: auto 3px 6px; height: 1px; background: currentColor; }

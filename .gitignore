@@ -1,0 +1,14 @@
+node_modules/
+dist/
+release/
+/evidence*/
+/design-qa.md
+*.log
+*.tmp
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key

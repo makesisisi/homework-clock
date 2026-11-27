@@ -1,0 +1,797 @@
+/* ==========================================================================
+   作业时钟 · 倒计时浮窗视觉主题与主题选择器样式
+   叠加覆盖基础布局样式（276×138px Windows 小组件），不重写基础布局尺寸
+   ========================================================================== */
+
+.countdown-card {
+  /* 主题可调变量与默认回退 */
+  --countdown-accent: #8ad4b0;
+  --cd-radius: 14px;
+  --cd-mono: "Cascadia Mono", "JetBrains Mono", "SFMono-Regular", Consolas,
+    "Liberation Mono", ui-monospace, monospace;
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 78%, #ffffff);
+  --cd-btn-bg: transparent;
+  --cd-btn-hover: rgba(255, 255, 255, 0.12);
+  --cd-btn-active: rgba(255, 255, 255, 0.2);
+  --cd-text-shadow: none;
+  --cd-accent-ink: color-mix(in srgb, var(--countdown-accent) 76%, var(--fg, #f3f7ff));
+
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--cd-radius);
+  color: var(--fg);
+  text-shadow: var(--cd-text-shadow);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+/* 保证所有真实交互内容位于材质装饰层之上，保持拖动与按钮点击原交互 */
+.countdown-card > .countdown-card-header,
+.countdown-card > .countdown-remaining,
+.countdown-card > .countdown-target {
+  position: relative;
+  z-index: 2;
+}
+
+/* 装饰伪元素严禁拦截鼠标拖动与按钮点击 */
+.countdown-card::before,
+.countdown-card::after {
+  pointer-events: none;
+}
+
+/* 标题与图标微调 */
+.countdown-card .countdown-card-header svg {
+  color: var(--cd-accent-ink);
+  flex-shrink: 0;
+}
+
+.countdown-card .countdown-card-header h1 {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* 编辑 / 隐藏按钮：克制轻量，聚焦清晰 */
+.countdown-card .countdown-card-header .icon-button {
+  color: var(--sub);
+  background: var(--cd-btn-bg);
+  border-color: transparent;
+  border-radius: 7px;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.countdown-card .countdown-card-header .icon-button:hover {
+  color: var(--fg);
+  background: var(--cd-btn-hover);
+}
+
+.countdown-card .countdown-card-header .icon-button:active {
+  color: var(--fg);
+  background: var(--cd-btn-active);
+}
+
+.countdown-card .countdown-card-header .icon-button:focus-visible {
+  outline: 2px solid var(--cd-focus-ring);
+  outline-offset: 1px;
+  color: var(--fg);
+}
+
+/* 倒计时主数字：等宽防抖，秒位与长数字稳定对齐 */
+.countdown-card .countdown-remaining {
+  color: var(--fg);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.countdown-card .countdown-remaining > span:first-child {
+  color: var(--cd-accent-ink);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.countdown-card .countdown-remaining > span:first-child small {
+  color: var(--sub);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.countdown-card .countdown-remaining > span:last-child {
+  font-family: var(--cd-mono);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* 目标时间：等宽细排 */
+.countdown-card .countdown-target {
+  color: var(--sub);
+  font-family: var(--cd-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: 0.01em;
+}
+
+/* 结束状态：保持可读，柔和收束对比 */
+.countdown-card[data-finished="true"] .countdown-remaining > span:first-child {
+  color: var(--sub);
+}
+
+.countdown-card[data-finished="true"] .countdown-remaining > span:last-child {
+  color: var(--cd-accent-ink);
+  font-family: inherit;
+  opacity: 0.92;
+}
+
+.countdown-card[data-finished="true"] .countdown-target {
+  opacity: 0.82;
+}
+
+/* ==========================================================================
+   1. DESKTOP：像压在桌面上的清楚文字，无底板无边框，浅字/深墨轻阴影
+   ========================================================================== */
+
+.countdown-card[data-theme="desktop"] {
+  --surface: transparent;
+  --rule: transparent;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.countdown-card[data-theme="desktop"]::before,
+.countdown-card[data-theme="desktop"]::after {
+  content: none;
+}
+
+/* 浅字（适配偏暗或中灰桌面壁纸） */
+.countdown-card[data-theme="desktop"][data-ink="light"],
+.countdown-card[data-theme="desktop"]:not([data-ink]) {
+  --fg: #f8fafc;
+  --sub: rgba(241, 245, 249, 0.84);
+  --course: color-mix(in srgb, var(--countdown-accent) 44%, #ffffff);
+  --cd-accent-ink: color-mix(in srgb, var(--countdown-accent) 44%, #ffffff);
+  --cd-btn-hover: rgba(15, 23, 42, 0.34);
+  --cd-btn-active: rgba(15, 23, 42, 0.48);
+  --cd-focus-ring: rgba(255, 255, 255, 0.92);
+  --cd-text-shadow:
+    0 1px 2px rgba(8, 12, 22, 0.56),
+    0 2px 8px rgba(8, 12, 22, 0.28);
+}
+
+/* 深墨（适配浅色桌面壁纸，不加粗描边，仅柔和浅晕托底） */
+.countdown-card[data-theme="desktop"][data-ink="dark"] {
+  --fg: #141b26;
+  --sub: rgba(28, 38, 54, 0.78);
+  --course: color-mix(in srgb, var(--countdown-accent) 28%, #0f172a);
+  --cd-accent-ink: var(--course);
+  --cd-btn-hover: rgba(255, 255, 255, 0.44);
+  --cd-btn-active: rgba(255, 255, 255, 0.64);
+  --cd-focus-ring: rgba(20, 27, 38, 0.85);
+  --cd-text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.62),
+    0 0 6px rgba(255, 255, 255, 0.34);
+}
+
+.countdown-card[data-theme="desktop"] .countdown-card-header svg {
+  filter: drop-shadow(0 1px 2px rgba(8, 12, 22, 0.35));
+}
+
+.countdown-card[data-theme="desktop"][data-ink="dark"] .countdown-card-header svg {
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.55));
+}
+
+/* ==========================================================================
+   2. LIQUID：高清透液态玻璃，无采样、无 backdrop-filter，
+      静态边缘光 + 弧状不对称反射，避免整周纯白边，支持浅字/深墨
+   ========================================================================== */
+
+.countdown-card[data-theme="liquid"] {
+  overflow: hidden;
+  border: 1px solid transparent;
+}
+
+/* 弧状不对称反射层 */
+.countdown-card[data-theme="liquid"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      115% 88% at 14% -18%,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.14) 34%,
+      rgba(255, 255, 255, 0) 64%
+    ),
+    radial-gradient(
+      76% 68% at 94% 114%,
+      color-mix(in srgb, var(--countdown-accent) 26%, rgba(255, 255, 255, 0.24)) 0%,
+      rgba(255, 255, 255, 0) 68%
+    ),
+    linear-gradient(
+      148deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.02) 42%,
+      rgba(255, 255, 255, 0) 58%,
+      rgba(255, 255, 255, 0.09) 100%
+    );
+}
+
+/* 不对称静态边缘光（仅左上与右下斜向局部高光，不做整周纯白边框） */
+.countdown-card[data-theme="liquid"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    138deg,
+    rgba(255, 255, 255, 0.66) 0%,
+    rgba(255, 255, 255, 0.18) 24%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.12) 76%,
+    color-mix(in srgb, var(--countdown-accent) 44%, rgba(255, 255, 255, 0.32)) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.countdown-card[data-theme="liquid"][data-ink="light"],
+.countdown-card[data-theme="liquid"]:not([data-ink]) {
+  --surface: rgba(16, 24, 38, 0.24);
+  --rule: rgba(255, 255, 255, 0.16);
+  --fg: #f8fbff;
+  --sub: rgba(236, 244, 255, 0.82);
+  --course: color-mix(in srgb, var(--countdown-accent) 46%, #ffffff);
+  --cd-accent-ink: color-mix(in srgb, var(--countdown-accent) 46%, #ffffff);
+  --cd-btn-hover: rgba(255, 255, 255, 0.16);
+  --cd-btn-active: rgba(255, 255, 255, 0.24);
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 65%, #ffffff);
+  --cd-text-shadow: 0 1px 3px rgba(7, 13, 24, 0.42);
+  background:
+    linear-gradient(
+      152deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(20, 30, 48, 0.08) 52%,
+      rgba(12, 19, 32, 0.19) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    inset 0 -10px 18px rgba(10, 16, 28, 0.14),
+    0 10px 26px rgba(8, 14, 26, 0.26);
+}
+
+.countdown-card[data-theme="liquid"][data-ink="dark"] {
+  --surface: rgba(255, 255, 255, 0.34);
+  --rule: rgba(18, 28, 44, 0.12);
+  --fg: #131c2b;
+  --sub: rgba(28, 41, 61, 0.76);
+  --course: color-mix(in srgb, var(--countdown-accent) 29%, #0f172a);
+  --cd-accent-ink: var(--course);
+  --cd-btn-hover: rgba(19, 28, 43, 0.08);
+  --cd-btn-active: rgba(19, 28, 43, 0.14);
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 62%, #0f172a);
+  --cd-text-shadow: 0 1px 1px rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(
+      152deg,
+      rgba(255, 255, 255, 0.26) 0%,
+      rgba(244, 248, 255, 0.08) 54%,
+      rgba(226, 236, 248, 0.17) 100%
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -8px 16px rgba(148, 168, 196, 0.14),
+    0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+/* ==========================================================================
+   3. FROST：亮柔磨砂，含可选壁纸静帧模糊淡化 + ./assets/frost-grain.png 细颗粒，
+      深色文字保证清晰对比
+   ========================================================================== */
+
+.countdown-card[data-theme="frost"] {
+  --surface: rgba(244, 247, 251, 0.88);
+  --rule: rgba(28, 42, 62, 0.12);
+  --fg: #182230;
+  --sub: rgba(34, 48, 68, 0.72);
+  --course: color-mix(in srgb, var(--countdown-accent) 34%, #132033);
+  --cd-accent-ink: var(--course);
+  --cd-btn-hover: rgba(24, 34, 48, 0.08);
+  --cd-btn-active: rgba(24, 34, 48, 0.14);
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 64%, #182230);
+  --cd-text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+
+  overflow: hidden;
+  background:
+    linear-gradient(
+      160deg,
+      rgba(252, 253, 255, 0.92) 0%,
+      rgba(239, 244, 250, 0.88) 58%,
+      color-mix(in srgb, var(--countdown-accent) 10%, rgba(235, 241, 248, 0.9)) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    inset 0 -1px 0 rgba(24, 38, 58, 0.06),
+    0 8px 22px rgba(22, 34, 52, 0.12);
+}
+
+/* 可选背景静帧：尊重 img 内联的 left/top/width/height，仅做柔和淡化与模糊 */
+.countdown-card[data-theme="frost"] > .countdown-frost-wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.countdown-card[data-theme="frost"] > .countdown-frost-wallpaper img {
+  position: absolute;
+  max-width: none;
+  pointer-events: none;
+  opacity: 0.58;
+  filter: blur(20px) saturate(1.12) brightness(1.14);
+  transform: scale(1.06);
+  transform-origin: center;
+}
+
+/* 亮柔雾化覆层：压柔壁纸色块，维持均匀阅读底色 */
+.countdown-card[data-theme="frost"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      110% 90% at 15% 0%,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(246, 249, 253, 0.48) 55%,
+      rgba(238, 243, 249, 0.66) 100%
+    );
+}
+
+/* 磨砂颗粒层 */
+.countdown-card[data-theme="frost"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background-image: url("./assets/frost-grain.png");
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  opacity: 0.24;
+  mix-blend-mode: soft-light;
+}
+
+/* ==========================================================================
+   4. PAPER：暖米白细纤维纸感 + ./assets/crumpled-paper.jpg + 暖褐深色字
+   ========================================================================== */
+
+.countdown-card[data-theme="paper"] {
+  --surface: #f5efe4;
+  --rule: rgba(94, 72, 52, 0.15);
+  --fg: #34281f;
+  --sub: #746050;
+  --course: color-mix(in srgb, var(--countdown-accent) 46%, #4a3525);
+  --cd-accent-ink: color-mix(in srgb, var(--countdown-accent) 27%, #473222);
+  --cd-btn-hover: rgba(74, 53, 37, 0.08);
+  --cd-btn-active: rgba(74, 53, 37, 0.14);
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 55%, #4a3525);
+  --cd-text-shadow: 0 1px 0 rgba(255, 252, 246, 0.65);
+
+  overflow: hidden;
+  background:
+    linear-gradient(
+      168deg,
+      #faf6ee 0%,
+      #f3ecdf 56%,
+      #ede4d5 100%
+    );
+  border: 1px solid rgba(132, 108, 84, 0.24);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 252, 245, 0.85),
+    inset 0 -1px 0 rgba(102, 78, 56, 0.09),
+    0 7px 20px rgba(48, 34, 22, 0.12),
+    0 1px 3px rgba(48, 34, 22, 0.08);
+}
+
+/* 轻微细纤维纸纹 */
+.countdown-card[data-theme="paper"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background-image: url("./assets/crumpled-paper.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.13;
+  mix-blend-mode: multiply;
+  filter: contrast(0.88) saturate(0.65);
+}
+
+/* 柔和纸面漫反射微光 */
+.countdown-card[data-theme="paper"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      100% 80% at 12% 0%,
+      rgba(255, 253, 248, 0.42) 0%,
+      rgba(255, 253, 248, 0) 64%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(128, 98, 70, 0.04) 100%
+    );
+}
+
+/* ==========================================================================
+   5. MIDNIGHT：延续夜蓝，精修边缘高光与细阴影
+   ========================================================================== */
+
+.countdown-card[data-theme="midnight"] {
+  --surface: #111b2e;
+  --rule: rgba(148, 179, 224, 0.16);
+  --fg: #edf3fc;
+  --sub: rgba(186, 204, 232, 0.78);
+  --course: color-mix(in srgb, var(--countdown-accent) 62%, #d8ecff);
+  --cd-accent-ink: color-mix(in srgb, var(--countdown-accent) 62%, #e4f2ff);
+  --cd-btn-hover: rgba(176, 204, 245, 0.13);
+  --cd-btn-active: rgba(176, 204, 245, 0.22);
+  --cd-focus-ring: color-mix(in srgb, var(--countdown-accent) 72%, #ffffff);
+  --cd-text-shadow: 0 1px 2px rgba(4, 9, 20, 0.42);
+
+  overflow: hidden;
+  background:
+    radial-gradient(
+      110% 88% at 16% -12%,
+      color-mix(in srgb, var(--countdown-accent) 16%, #1f3252) 0%,
+      rgba(20, 33, 56, 0) 62%
+    ),
+    linear-gradient(
+      165deg,
+      #16243d 0%,
+      #101b2f 54%,
+      #0c1424 100%
+    );
+  border: 1px solid rgba(154, 186, 232, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(212, 230, 255, 0.16),
+    inset 0 -1px 0 rgba(4, 8, 16, 0.55),
+    0 10px 26px rgba(4, 8, 18, 0.46),
+    0 2px 6px rgba(4, 8, 18, 0.32);
+}
+
+.countdown-card[data-theme="midnight"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.045) 0%,
+    rgba(255, 255, 255, 0) 36%
+  );
+}
+
+/* ==========================================================================
+   主题选择器 CountdownThemePicker（宽 320px，共用色彩与聚焦变量）
+   ========================================================================== */
+
+.countdown-theme-picker {
+  --picker-fg: var(--fg, #e8eef8);
+  --picker-sub: var(--sub, rgba(196, 210, 232, 0.76));
+  --picker-rule: var(--rule, rgba(164, 186, 218, 0.18));
+  --picker-surface: var(--surface, rgba(18, 27, 44, 0.88));
+  --picker-accent: var(--countdown-accent, var(--course, #8ad4b0));
+  --picker-focus: color-mix(in srgb, var(--picker-accent) 78%, #ffffff);
+
+  width: 320px;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--picker-fg);
+}
+
+.countdown-theme-picker *,
+.countdown-theme-picker *::before,
+.countdown-theme-picker *::after {
+  box-sizing: border-box;
+}
+
+.countdown-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.countdown-theme-option {
+  appearance: none;
+  margin: 0;
+  padding: 5px 2px 6px;
+  border: 1px solid var(--picker-rule);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--picker-surface) 82%, transparent);
+  color: var(--picker-sub);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.2;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 120ms ease;
+}
+
+.countdown-theme-option:hover {
+  color: var(--picker-fg);
+  border-color: color-mix(in srgb, var(--picker-accent) 46%, var(--picker-rule));
+  background: color-mix(in srgb, var(--picker-accent) 9%, var(--picker-surface));
+}
+
+.countdown-theme-option:active {
+  transform: translateY(0.5px);
+}
+
+.countdown-theme-option[aria-pressed="true"] {
+  color: var(--picker-fg);
+  font-weight: 600;
+  border-color: color-mix(in srgb, var(--picker-accent) 82%, #ffffff);
+  background: color-mix(in srgb, var(--picker-accent) 16%, var(--picker-surface));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--picker-accent) 65%, transparent),
+    0 4px 12px rgba(0, 0, 0, 0.16);
+}
+
+.countdown-theme-option:focus-visible {
+  outline: 2px solid var(--picker-focus);
+  outline-offset: 2px;
+  color: var(--picker-fg);
+}
+
+.countdown-theme-label {
+  display: block;
+  max-width: 100%;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* 材质缩略图 */
+.countdown-theme-swatch {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 5px 6px;
+}
+
+.countdown-theme-swatch-bar {
+  position: relative;
+  z-index: 2;
+  display: block;
+  height: 3px;
+  border-radius: 999px;
+}
+
+.countdown-theme-swatch-bar--main {
+  width: 74%;
+}
+
+.countdown-theme-swatch-bar--sub {
+  width: 48%;
+  opacity: 0.7;
+}
+
+/* 缩略图：desktop */
+.countdown-theme-swatch[data-theme-swatch="desktop"] {
+  background:
+    radial-gradient(circle at 22% 24%, #6a84a8 0%, transparent 56%),
+    linear-gradient(135deg, #2d3c52 0%, #4d627c 54%, #7e92a8 100%);
+  border: 1px dashed rgba(255, 255, 255, 0.32);
+}
+
+.countdown-theme-swatch[data-theme-swatch="desktop"] .countdown-theme-swatch-bar {
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(8, 12, 22, 0.55);
+}
+
+/* 缩略图：liquid */
+.countdown-theme-swatch[data-theme-swatch="liquid"] {
+  background:
+    radial-gradient(100% 90% at 14% -10%, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(75% 75% at 92% 110%, color-mix(in srgb, var(--picker-accent) 42%, transparent) 0%, transparent 65%),
+    linear-gradient(145deg, rgba(164, 196, 232, 0.38) 0%, rgba(30, 44, 66, 0.55) 100%);
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.56),
+    inset -1px -1px 0 rgba(168, 220, 200, 0.28);
+}
+
+.countdown-theme-swatch[data-theme-swatch="liquid"] .countdown-theme-swatch-bar {
+  background: rgba(248, 252, 255, 0.94);
+}
+
+/* 缩略图：frost */
+.countdown-theme-swatch[data-theme-swatch="frost"] {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.9) 0%, rgba(226, 235, 246, 0.85) 65%),
+    linear-gradient(150deg, #f3f7fc 0%, #dde6f2 100%);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+}
+
+.countdown-theme-swatch[data-theme-swatch="frost"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("./assets/frost-grain.png");
+  background-size: 96px 96px;
+  opacity: 0.28;
+  pointer-events: none;
+}
+
+.countdown-theme-swatch[data-theme-swatch="frost"] .countdown-theme-swatch-bar {
+  background: #1d2a3a;
+}
+
+/* 缩略图：paper */
+.countdown-theme-swatch[data-theme-swatch="paper"] {
+  background: linear-gradient(160deg, #faf5ec 0%, #ece3d2 100%);
+  border: 1px solid rgba(132, 108, 84, 0.3);
+}
+
+.countdown-theme-swatch[data-theme-swatch="paper"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("./assets/crumpled-paper.jpg");
+  background-size: cover;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.countdown-theme-swatch[data-theme-swatch="paper"] .countdown-theme-swatch-bar {
+  background: #463528;
+}
+
+/* 缩略图：midnight */
+.countdown-theme-swatch[data-theme-swatch="midnight"] {
+  background:
+    radial-gradient(90% 80% at 15% 0%, rgba(114, 168, 224, 0.24) 0%, transparent 65%),
+    linear-gradient(165deg, #17253e 0%, #0d1627 100%);
+  border: 1px solid rgba(154, 186, 232, 0.28);
+}
+
+.countdown-theme-swatch[data-theme-swatch="midnight"] .countdown-theme-swatch-bar--main {
+  background: color-mix(in srgb, var(--picker-accent) 68%, #ffffff);
+}
+
+.countdown-theme-swatch[data-theme-swatch="midnight"] .countdown-theme-swatch-bar--sub {
+  background: #dce8fa;
+}
+
+/* 仅 desktop / liquid 显示的浅字与深墨切换条 */
+.countdown-ink-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 2px;
+}
+
+.countdown-ink-title {
+  font-size: 11px;
+  color: var(--picker-sub);
+  white-space: nowrap;
+}
+
+.countdown-ink-group {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  flex: 1;
+  max-width: 196px;
+}
+
+.countdown-ink-button {
+  appearance: none;
+  margin: 0;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--picker-rule);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--picker-surface) 84%, transparent);
+  color: var(--picker-sub);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.countdown-ink-button:hover {
+  color: var(--picker-fg);
+  border-color: color-mix(in srgb, var(--picker-accent) 46%, var(--picker-rule));
+}
+
+.countdown-ink-button[aria-pressed="true"] {
+  color: var(--picker-fg);
+  font-weight: 600;
+  border-color: color-mix(in srgb, var(--picker-accent) 82%, #ffffff);
+  background: color-mix(in srgb, var(--picker-accent) 16%, var(--picker-surface));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--picker-accent) 62%, transparent);
+}
+
+.countdown-ink-button:focus-visible {
+  outline: 2px solid var(--picker-focus);
+  outline-offset: 2px;
+  color: var(--picker-fg);
+}
+
+.countdown-ink-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.countdown-ink-dot--light {
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.countdown-ink-dot--dark {
+  background: #141c28;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-card,
+  .countdown-card .countdown-card-header .icon-button,
+  .countdown-theme-option,
+  .countdown-ink-button { transition: none; }
+}
